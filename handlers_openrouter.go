@@ -42,3 +42,20 @@ func openrouterChat(w http.ResponseWriter, r *http.Request) {
 
 	jsonResponse(w, 200, chat)
 }
+
+func openrouterChatWithImage(w http.ResponseWriter, r *http.Request) {
+	messages := []openrouter.MessageWithImage{}
+	decoder := json.NewDecoder(r.Body)
+	err := decoder.Decode(&messages)
+	if err != nil {
+		jsonErrorResponse(w, 422, handlerErrors.OpenrouterErrors.ChatBody)
+		return
+	}
+
+	chat, err := openrouter.ChatWithImage(messages)
+	if err != nil {
+		jsonErrorResponse(w, 400, handlerErrors.OpenrouterErrors.Chat)
+	}
+
+	jsonResponse(w, 200, chat)
+}
