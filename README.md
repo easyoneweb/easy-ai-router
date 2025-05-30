@@ -170,7 +170,7 @@ See CHANGELOG.md
 
 ## For more information
 
-* [GitHub](https://github.com/ikirja/easy-ai-router)
+* [GitHub](https://github.com/easyoneweb/easy-ai-router)
 * [EasyOneWeb LLC](https://easyoneweb.ru)
 
 # Copyright
