@@ -1,3 +1,3 @@
-Использование кода или его части разрешено в полном объеме, в том числе в коммерческих продуктах. Логотипы EOW, EasyOneWeb и другие графические изображения являются торговыми марками ООО "ИзиВанВеб", их публичное использования без согласования с правообладателем запрещено. Все права защищены.
+Программное обеспечение распространяется под лицензией MIT. Использование кода или его части разрешено в полном объеме, в том числе в коммерческих продуктах. Ограничения на модификацию кода, в том числе его частей, разрешено в полном объеме. Логотипы EOW, EasyOneWeb и другие графические изображения являются торговыми марками ООО "ИзиВанВеб", их публичное использования без согласования с правообладателем запрещено. Все права защищены.
 
-Usage of this code is allowed and free of charge, including commercial use. EOW, EasyOneWeb, EasyOneWeb LLC logos are trademarks of EasyOneWeb LLC, all rights reserved.
+Software is distributed under MIT license. Usage of this code is allowed and free of charge, including commercial use. Modification of code or it's parts is allowed. EOW, EasyOneWeb, EasyOneWeb LLC logos are trademarks of EasyOneWeb LLC, all rights reserved.
