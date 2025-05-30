@@ -26,9 +26,12 @@ go build
 Application is using environment variables. You have to define:
 
 - PORT on which the server will run locally.
+- DB_URI is MongoDB URI to connect, example for local default: mongodb://localhost:27017.
+- DB_NAME is a name of db to use.
 - ACCESS_OPENROUTER_API_KEY to access application's REST API for OpenRouter.
 - OPENROUTER_HOST is host URL for OpenRouter REST API.
 - OPENROUTER_API_KEY is api key for OpenRouter REST API.
+- OPENROUTER_LIMIT is a limit on how many requests can be made to openrouter api per day, -1 means infinite.
 
 You can define all needed variables in .env file in root folder of this application.
 
@@ -74,12 +77,56 @@ POST /chat
 
 Body example:
 ```json
-[
-  {
-    "role": "user",
-    "content": "tell me a joke"
-  }
-]
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "tell me a joke"
+    }
+  ],
+  "request_identity": "your custom string to track identity or type of request"
+}
+```
+
+Response example:
+```json
+{
+  "id": "gen-1742842377-CFRRcQjjZD9gDui1uS8W",
+  "choices": [
+    {
+      "message": {
+        "role": "assistant",
+        "content": "Sure! Here's a lighthearted joke for you:\n\nWhy don’t you ever see elephants hiding in trees?  \n*…Because they’re really good at it!* 🌳🐘  \n\n(Or if you’d prefer a groan-worthy pun):  \nWhat do you call a dog that can do magic?  \n*…A labracadabrador!* 🐕✨  \n\nLet me know if you need more laughs! 😄"
+      }
+    }
+  ]
+}
+```
+
+POST /chat/image
+
+Body example:
+```json
+{
+  "messages_with_image": [
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "Please, describe the image in the nicest way possible"
+        },
+        {
+          "type": "image_url",
+          "image_url": {
+            "url": "url to image file or base64 encoded string of an image itself"
+          }
+        }
+      ]
+    }
+  ],
+  "request_identity": "your custom string to track identity or type of request"
+}
 ```
 
 Response example:
@@ -107,9 +154,7 @@ There are currently no known issues.
 
 ## Release Notes
 
-### 0.1.0
-
-Initial working version.
+See CHANGELOG.md
 
 ---
 

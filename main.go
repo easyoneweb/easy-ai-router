@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/easyoneweb/easy-ai-router/internal/database"
 	"github.com/go-chi/chi"
 	"github.com/joho/godotenv"
 )
@@ -16,11 +17,15 @@ type ApiConfig struct {
 
 type EnvVars struct {
 	Port                   string
+	DBURI                  string
+	DBName                 string
 	AccessOpenrouterApiKey string
 }
 
 var envVars = EnvVars{
 	Port:                   "PORT",
+	DBURI:                  "DB_URI",
+	DBName:                 "DB_NAME",
 	AccessOpenrouterApiKey: "ACCESS_OPENROUTER_API_KEY",
 }
 
@@ -40,6 +45,21 @@ func main() {
 	apiCfg := ApiConfig{
 		Port:                   portString,
 		AccessOpenrouterApiKey: accessOpenrouter,
+	}
+
+	dbUri := os.Getenv(envVars.DBURI)
+	if dbUri == "" {
+		log.Fatal("DB_URI env variable not provided")
+	}
+
+	dbName := os.Getenv(envVars.DBName)
+	if dbName == "" {
+		log.Fatal("DB_NAME env variable not provided")
+	}
+
+	err := database.Connect(dbUri, dbName)
+	if err != nil {
+		log.Fatal("could not connect to database")
 	}
 
 	router := chi.NewRouter()
@@ -64,7 +84,7 @@ func main() {
 	}
 
 	log.Printf("[server]: starting on port %v", apiCfg.Port)
-	err := srv.ListenAndServe()
+	err = srv.ListenAndServe()
 	if err != nil {
 		log.Fatal(err)
 	}

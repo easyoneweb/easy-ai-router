@@ -63,7 +63,7 @@ var Models = Model{
 	Gemma3:     "google/gemma-3-12b-it:free",
 }
 
-func Chat(messages []Message) (ChatResponse, error) {
+func Chat(messages []Message, requestIdentity string) (ChatResponse, error) {
 	config := getConfig()
 
 	postBody, err := json.Marshal(PostBody{
@@ -100,10 +100,15 @@ func Chat(messages []Message) (ChatResponse, error) {
 		return ChatResponse{}, errors.New(openrouterErrors.UnmarshalJson)
 	}
 
+	err = CreateLimitLog("chat", requestIdentity)
+	if err != nil {
+		return ChatResponse{}, errors.New(openrouterErrors.LimitLog)
+	}
+
 	return chat, nil
 }
 
-func ChatWithImage(messages []MessageWithImage) (ChatResponse, error) {
+func ChatWithImage(messages []MessageWithImage, requestIdentity string) (ChatResponse, error) {
 	config := getConfig()
 
 	postBody, err := json.Marshal(PostWithImageBody{
@@ -138,6 +143,11 @@ func ChatWithImage(messages []MessageWithImage) (ChatResponse, error) {
 	err = json.Unmarshal(body, &chat)
 	if err != nil {
 		return ChatResponse{}, errors.New(openrouterErrors.UnmarshalJson)
+	}
+
+	err = CreateLimitLog("chat_with_image", requestIdentity)
+	if err != nil {
+		return ChatResponse{}, errors.New(openrouterErrors.LimitLog)
 	}
 
 	return chat, nil

@@ -7,6 +7,12 @@ import (
 	"github.com/easyoneweb/easy-ai-router/internal/openrouter"
 )
 
+type OpenrouterChatRequest struct {
+	Messages          []openrouter.Message          `json:"messages"`
+	MessagesWithImage []openrouter.MessageWithImage `json:"messages_with_image"`
+	RequestIdentity   string                        `json:"request_identity"`
+}
+
 func openrouterPing(w http.ResponseWriter, r *http.Request) {
 	body := struct {
 		Message string `json:"message"`
@@ -27,15 +33,15 @@ func openrouterKey(w http.ResponseWriter, r *http.Request) {
 }
 
 func openrouterChat(w http.ResponseWriter, r *http.Request) {
-	messages := []openrouter.Message{}
+	reqData := OpenrouterChatRequest{}
 	decoder := json.NewDecoder(r.Body)
-	err := decoder.Decode(&messages)
+	err := decoder.Decode(&reqData)
 	if err != nil {
 		jsonErrorResponse(w, 422, handlerErrors.OpenrouterErrors.ChatBody)
 		return
 	}
 
-	chat, err := openrouter.Chat(messages)
+	chat, err := openrouter.Chat(reqData.Messages, reqData.RequestIdentity)
 	if err != nil {
 		jsonErrorResponse(w, 400, handlerErrors.OpenrouterErrors.Chat)
 	}
@@ -44,15 +50,15 @@ func openrouterChat(w http.ResponseWriter, r *http.Request) {
 }
 
 func openrouterChatWithImage(w http.ResponseWriter, r *http.Request) {
-	messages := []openrouter.MessageWithImage{}
+	reqData := OpenrouterChatRequest{}
 	decoder := json.NewDecoder(r.Body)
-	err := decoder.Decode(&messages)
+	err := decoder.Decode(&reqData)
 	if err != nil {
 		jsonErrorResponse(w, 422, handlerErrors.OpenrouterErrors.ChatBody)
 		return
 	}
 
-	chat, err := openrouter.ChatWithImage(messages)
+	chat, err := openrouter.ChatWithImage(reqData.MessagesWithImage, reqData.RequestIdentity)
 	if err != nil {
 		jsonErrorResponse(w, 400, handlerErrors.OpenrouterErrors.Chat)
 	}

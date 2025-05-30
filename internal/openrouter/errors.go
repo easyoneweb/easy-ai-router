@@ -6,6 +6,7 @@ type OpenrouterErrors struct {
 	ReadBody      string
 	UnmarshalJson string
 	MarshalJson   string
+	LimitLog      string
 }
 
 var openrouterErrors = OpenrouterErrors{
@@ -14,4 +15,5 @@ var openrouterErrors = OpenrouterErrors{
 	ReadBody:      "couldn't read response body",
 	UnmarshalJson: "couldn't unmarshal json body",
 	MarshalJson:   "couldn't marshal post body",
+	LimitLog:      "couldn't create limit log",
 }
