@@ -73,6 +73,8 @@ func main() {
 			r.Get("/limits", openrouterLimits)
 
 			r.Route("/chat", func(r chi.Router) {
+				r.Use(checkOpenrouterLimits)
+
 				r.Post("/", openrouterChat)
 				r.Post("/image", openrouterChatWithImage)
 			})
