@@ -70,6 +70,7 @@ func main() {
 		r.Route("/api/v1", func(r chi.Router) {
 			r.Get("/ping", openrouterPing)
 			r.Get("/key", openrouterKey)
+			r.Get("/limits", openrouterLimits)
 
 			r.Route("/chat", func(r chi.Router) {
 				r.Post("/", openrouterChat)

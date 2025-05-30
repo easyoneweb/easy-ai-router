@@ -7,10 +7,10 @@ import (
 	"go.mongodb.org/mongo-driver/v2/bson"
 )
 
-// Gets total limit for openrouter provider from env variable, used limits for today
-// based on db logs.
-// Return how many requests left, total limit, error if error occured.
-// Return of -1 for how many requests left means infinite.
+// Gets limits for openrouter provider.
+// Total limit is defined in env variable OPENROUTER_LIMIT.
+// Returns how many requests were made today and total limit, error if error occured.
+// Used limit and total limit -1 means infinite.
 func GetTodayLimits() (int, int, error) {
 	config := getConfig()
 	if config.limit == -1 {
@@ -21,13 +21,13 @@ func GetTodayLimits() (int, int, error) {
 	startTime := time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 1, 0, t.Location())
 	endTime := time.Date(t.Year(), t.Month(), t.Day(), 23, 59, 59, 0, t.Location())
 
-	timeFilter := bson.M{"createdAt": bson.M{"$gte": startTime, "$lt": endTime}}
+	timeFilter := bson.M{"$gte": startTime, "$lt": endTime}
 	logs, err := database.GetLogsByProvider("openrouter", timeFilter)
 	if err != nil {
 		return 0, config.limit, err
 	}
 
-	return config.limit - len(logs), config.limit, nil
+	return len(logs), config.limit, nil
 }
 
 // Creates log in db.

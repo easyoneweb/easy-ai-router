@@ -32,6 +32,20 @@ func openrouterKey(w http.ResponseWriter, r *http.Request) {
 	jsonResponse(w, 200, key)
 }
 
+func openrouterLimits(w http.ResponseWriter, r *http.Request) {
+	type LimitsResponse struct {
+		UsedLimit int `json:"used_limit"`
+		Limit     int `json:"limit"`
+	}
+	usedLimit, limit, err := openrouter.GetTodayLimits()
+	if err != nil {
+		jsonErrorResponse(w, 400, handlerErrors.OpenrouterErrors.Limits)
+		return
+	}
+
+	jsonResponse(w, 200, LimitsResponse{UsedLimit: usedLimit, Limit: limit})
+}
+
 func openrouterChat(w http.ResponseWriter, r *http.Request) {
 	reqData := OpenrouterChatRequest{}
 	decoder := json.NewDecoder(r.Body)

@@ -73,6 +73,16 @@ Response example:
 }
 ```
 
+GET /limits
+
+Response example:
+```json
+{
+  "used_limit": 2,
+  "limit": 100
+}
+```
+
 POST /chat
 
 Body example:

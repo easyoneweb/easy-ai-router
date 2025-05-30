@@ -6,6 +6,7 @@ type HandlerErrors struct {
 
 type OpenrouterErrors struct {
 	Key      string
+	Limits   string
 	ChatBody string
 	Chat     string
 }
@@ -13,6 +14,7 @@ type OpenrouterErrors struct {
 var handlerErrors = HandlerErrors{
 	OpenrouterErrors: OpenrouterErrors{
 		Key:      "couldn't get key info",
+		Limits:   "couldn't get limits data",
 		ChatBody: "check sent data",
 		Chat:     "couldn't get chat data",
 	},
