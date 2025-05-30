@@ -1,4 +1,4 @@
-module github.com/ikirja/easy-ai-router
+module github.com/easyoneweb/easy-ai-router
 
 go 1.24.1
 

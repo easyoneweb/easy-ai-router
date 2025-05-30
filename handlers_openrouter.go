@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/ikirja/easy-ai-router/internal/openrouter"
+	"github.com/easyoneweb/easy-ai-router/internal/openrouter"
 )
 
 func openrouterPing(w http.ResponseWriter, r *http.Request) {
