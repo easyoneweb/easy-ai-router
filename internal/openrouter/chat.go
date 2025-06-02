@@ -43,11 +43,6 @@ type ImageUrl struct {
 	Url string `json:"url"`
 }
 
-type Model struct {
-	DeepSeekR1 string
-	Gemma3     string
-}
-
 type PostBody struct {
 	Model    string    `json:"model"`
 	Messages []Message `json:"messages"`
@@ -58,16 +53,16 @@ type PostWithImageBody struct {
 	Messages []MessageWithImage `json:"messages"`
 }
 
-var Models = Model{
-	DeepSeekR1: "deepseek/deepseek-r1:free",
-	Gemma3:     "google/gemma-3-12b-it:free",
+// Return default model deepseek-r1:free to use with Openrouter requests.
+func DefaultModel() string {
+	return "deepseek/deepseek-r1:free"
 }
 
-func Chat(messages []Message, requestIdentity string) (ChatResponse, error) {
+func Chat(messages []Message, model string, requestIdentity string) (ChatResponse, error) {
 	config := getConfig()
 
 	postBody, err := json.Marshal(PostBody{
-		Model:    Models.DeepSeekR1,
+		Model:    model,
 		Messages: messages,
 	})
 	if err != nil {
@@ -108,11 +103,11 @@ func Chat(messages []Message, requestIdentity string) (ChatResponse, error) {
 	return chat, nil
 }
 
-func ChatWithImage(messages []MessageWithImage, requestIdentity string) (ChatResponse, error) {
+func ChatWithImage(messages []MessageWithImage, model string, requestIdentity string) (ChatResponse, error) {
 	config := getConfig()
 
 	postBody, err := json.Marshal(PostWithImageBody{
-		Model:    Models.Gemma3,
+		Model:    model,
 		Messages: messages,
 	})
 	if err != nil {

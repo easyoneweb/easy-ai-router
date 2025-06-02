@@ -94,6 +94,7 @@ Body example:
       "content": "tell me a joke"
     }
   ],
+  "model": "openrouter model name, example: deepseek/deepseek-r1:free",
   "request_identity": "your custom string to track identity or type of request"
 }
 ```
@@ -135,6 +136,7 @@ Body example:
       ]
     }
   ],
+  "model": "openrouter model name, example: google/gemma-3-12b-it:free",
   "request_identity": "your custom string to track identity or type of request"
 }
 ```

@@ -10,6 +10,7 @@ import (
 type OpenrouterChatRequest struct {
 	Messages          []openrouter.Message          `json:"messages"`
 	MessagesWithImage []openrouter.MessageWithImage `json:"messages_with_image"`
+	Model             string                        `json:"model"`
 	RequestIdentity   string                        `json:"request_identity"`
 }
 
@@ -47,15 +48,19 @@ func openrouterLimits(w http.ResponseWriter, r *http.Request) {
 }
 
 func openrouterChat(w http.ResponseWriter, r *http.Request) {
-	reqData := OpenrouterChatRequest{}
+	reqBody := OpenrouterChatRequest{}
 	decoder := json.NewDecoder(r.Body)
-	err := decoder.Decode(&reqData)
+	err := decoder.Decode(&reqBody)
 	if err != nil {
 		jsonErrorResponse(w, 422, handlerErrors.OpenrouterErrors.ChatBody)
 		return
 	}
 
-	chat, err := openrouter.Chat(reqData.Messages, reqData.RequestIdentity)
+	if reqBody.Model == "" {
+		reqBody.Model = openrouter.DefaultModel()
+	}
+
+	chat, err := openrouter.Chat(reqBody.Messages, reqBody.Model, reqBody.RequestIdentity)
 	if err != nil {
 		jsonErrorResponse(w, 400, handlerErrors.OpenrouterErrors.Chat)
 	}
@@ -64,15 +69,19 @@ func openrouterChat(w http.ResponseWriter, r *http.Request) {
 }
 
 func openrouterChatWithImage(w http.ResponseWriter, r *http.Request) {
-	reqData := OpenrouterChatRequest{}
+	reqBody := OpenrouterChatRequest{}
 	decoder := json.NewDecoder(r.Body)
-	err := decoder.Decode(&reqData)
+	err := decoder.Decode(&reqBody)
 	if err != nil {
 		jsonErrorResponse(w, 422, handlerErrors.OpenrouterErrors.ChatBody)
 		return
 	}
 
-	chat, err := openrouter.ChatWithImage(reqData.MessagesWithImage, reqData.RequestIdentity)
+	if reqBody.Model == "" {
+		reqBody.Model = openrouter.DefaultModel()
+	}
+
+	chat, err := openrouter.ChatWithImage(reqBody.MessagesWithImage, reqBody.Model, reqBody.RequestIdentity)
 	if err != nil {
 		jsonErrorResponse(w, 400, handlerErrors.OpenrouterErrors.Chat)
 	}
