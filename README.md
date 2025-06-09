@@ -158,7 +158,7 @@ Response example:
 
 ## Additional information
 
-Easy-AI-Router is written in Go language (Go 1.24.1), uses: chi, godotenv. Please, before proceed be sure to check official documentation on corresponding technology.
+Easy-AI-Router is written in Go language (Go 1.24.1), uses: chi, godotenv. Please, before proceed be sure to check official documentation on corresponding technology. Tests are using local mongodb instance with "testdb" as db name.
 
 ## Known Issues
 
