@@ -59,8 +59,6 @@ func DefaultModel() string {
 }
 
 func Chat(messages []Message, model string, requestIdentity string) (ChatResponse, error) {
-	config := getConfig()
-
 	postBody, err := json.Marshal(PostBody{
 		Model:    model,
 		Messages: messages,
@@ -71,12 +69,12 @@ func Chat(messages []Message, model string, requestIdentity string) (ChatRespons
 
 	requestBody := bytes.NewBuffer(postBody)
 
-	resp, err := http.NewRequest(http.MethodPost, config.host+config.urls.apiV1.chatCompletion, requestBody)
+	resp, err := http.NewRequest(http.MethodPost, config.Host+config.Urls.apiV1.chatCompletion, requestBody)
 	if err != nil {
 		return ChatResponse{}, errors.New(openrouterErrors.CreateRequest)
 	}
 	resp.Header.Add("Content-Type", "application/json")
-	resp.Header.Add("Authorization", fmt.Sprintf("Bearer %v", config.apiKey))
+	resp.Header.Add("Authorization", fmt.Sprintf("Bearer %v", config.ApiKey))
 
 	response, err := http.DefaultClient.Do(resp)
 	if err != nil {
@@ -104,8 +102,6 @@ func Chat(messages []Message, model string, requestIdentity string) (ChatRespons
 }
 
 func ChatWithImage(messages []MessageWithImage, model string, requestIdentity string) (ChatResponse, error) {
-	config := getConfig()
-
 	postBody, err := json.Marshal(PostWithImageBody{
 		Model:    model,
 		Messages: messages,
@@ -116,12 +112,12 @@ func ChatWithImage(messages []MessageWithImage, model string, requestIdentity st
 
 	requestBody := bytes.NewBuffer(postBody)
 
-	resp, err := http.NewRequest(http.MethodPost, config.host+config.urls.apiV1.chatCompletion, requestBody)
+	resp, err := http.NewRequest(http.MethodPost, config.Host+config.Urls.apiV1.chatCompletion, requestBody)
 	if err != nil {
 		return ChatResponse{}, errors.New(openrouterErrors.CreateRequest)
 	}
 	resp.Header.Add("Content-Type", "application/json")
-	resp.Header.Add("Authorization", fmt.Sprintf("Bearer %v", config.apiKey))
+	resp.Header.Add("Authorization", fmt.Sprintf("Bearer %v", config.ApiKey))
 
 	response, err := http.DefaultClient.Do(resp)
 	if err != nil {

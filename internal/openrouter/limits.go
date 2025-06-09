@@ -12,9 +12,8 @@ import (
 // Returns how many requests were made today and total limit, error if error occured.
 // Used limit and total limit -1 means infinite.
 func GetTodayLimits() (int, int, error) {
-	config := getConfig()
-	if config.limit == -1 {
-		return -1, config.limit, nil
+	if config.Limit == -1 {
+		return -1, config.Limit, nil
 	}
 
 	t := time.Now()
@@ -24,10 +23,10 @@ func GetTodayLimits() (int, int, error) {
 	timeFilter := bson.M{"$gte": startTime, "$lt": endTime}
 	logs, err := database.GetLogsByProvider("openrouter", timeFilter)
 	if err != nil {
-		return 0, config.limit, err
+		return 0, config.Limit, err
 	}
 
-	return len(logs), config.limit, nil
+	return len(logs), config.Limit, nil
 }
 
 // Creates log in db.

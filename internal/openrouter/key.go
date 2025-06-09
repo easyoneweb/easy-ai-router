@@ -28,14 +28,12 @@ type RateLimit struct {
 }
 
 func GetKeyInfo() (KeyResponse, error) {
-	config := getConfig()
-
-	resp, err := http.NewRequest(http.MethodGet, config.host+config.urls.apiV1.key, nil)
+	resp, err := http.NewRequest(http.MethodGet, config.Host+config.Urls.apiV1.key, nil)
 	if err != nil {
 		return KeyResponse{}, errors.New(openrouterErrors.CreateRequest)
 	}
 	resp.Header.Add("Content-Type", "application/json")
-	resp.Header.Add("Authorization", fmt.Sprintf("Bearer %v", config.apiKey))
+	resp.Header.Add("Authorization", fmt.Sprintf("Bearer %v", config.ApiKey))
 
 	response, err := http.DefaultClient.Do(resp)
 	if err != nil {
