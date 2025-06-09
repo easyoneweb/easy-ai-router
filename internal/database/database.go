@@ -94,3 +94,10 @@ func GetLogsByProvider(provider string, timeFilter bson.M) ([]Log, error) {
 
 	return result, nil
 }
+
+// Deletes all Log documents from database for specified provider.
+// Return error if error occured.
+func DeleteLogsByProdvider(provider string) error {
+	_, err := db.Logs.DeleteMany(context.Background(), bson.M{"provider": provider})
+	return err
+}
