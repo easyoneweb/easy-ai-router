@@ -8,6 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/v2/bson"
 )
 
+// Tests are written using deepseek-r1 model
 const (
 	testDBURI  = "mongodb://localhost:27017"
 	testDBName = "testdb"
