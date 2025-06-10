@@ -41,6 +41,10 @@ func GetKeyInfo() (KeyResponse, error) {
 	}
 	defer response.Body.Close()
 
+	if response.StatusCode != 200 {
+		return KeyResponse{}, errors.New(openrouterErrors.StatusCode)
+	}
+
 	body, err := io.ReadAll(response.Body)
 	if err != nil {
 		return KeyResponse{}, errors.New(openrouterErrors.ReadBody)

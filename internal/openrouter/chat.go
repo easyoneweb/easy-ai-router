@@ -82,6 +82,10 @@ func Chat(messages []Message, model string, requestIdentity string) (ChatRespons
 	}
 	defer response.Body.Close()
 
+	if response.StatusCode != 200 {
+		return ChatResponse{}, errors.New(openrouterErrors.StatusCode)
+	}
+
 	body, err := io.ReadAll(response.Body)
 	if err != nil {
 		return ChatResponse{}, errors.New(openrouterErrors.ReadBody)
@@ -124,6 +128,10 @@ func ChatWithImage(messages []MessageWithImage, model string, requestIdentity st
 		return ChatResponse{}, errors.New(openrouterErrors.DoRequest)
 	}
 	defer response.Body.Close()
+
+	if response.StatusCode != 200 {
+		return ChatResponse{}, errors.New(openrouterErrors.StatusCode)
+	}
 
 	body, err := io.ReadAll(response.Body)
 	if err != nil {
