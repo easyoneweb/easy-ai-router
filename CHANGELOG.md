@@ -5,6 +5,18 @@ All notable changes to the "easy-ai-router" application will be documented in th
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2025-06-10
+
+### Added
+
+- Tests!
+- Check for Openrouter responses status code.
+
+### Changed
+
+- Setup services in main package in separate functions.
+- Openrouter config now uses global to package variable.
+
 ## [0.2.0] - 2025-06-02
 
 ### Added
