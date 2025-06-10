@@ -36,7 +36,7 @@ func getTestChatPostBody(t *testing.T) PostBody {
 	messages = append(messages, message)
 
 	return PostBody{
-		Model: "test-model",
+		Model:    "test-model",
 		Messages: messages,
 	}
 }
@@ -48,20 +48,20 @@ func getTestChatPostWithImageBody(t *testing.T) PostWithImageBody {
 		Text: "test-text",
 	}
 	contentImage := Content{
-		Type: "image_url",
-		ImageUrl: ImageUrl{ Url: "text-image" },
+		Type:     "image_url",
+		ImageUrl: ImageUrl{Url: "text-image"},
 	}
 	contents := make([]Content, 0, 2)
 	contents = append(contents, contentText, contentImage)
 	message := MessageWithImage{
-		Role: "user",
+		Role:    "user",
 		Content: contents,
 	}
 	messages := make([]MessageWithImage, 0, 1)
 	messages = append(messages, message)
 
 	return PostWithImageBody{
-		Model: "test-model",
+		Model:    "test-model",
 		Messages: messages,
 	}
 }
@@ -215,7 +215,7 @@ func TestChat(t *testing.T) {
 	t.Run("Chat", func(t *testing.T) {
 		testPostData := getTestChatPostBody(t)
 		testChatResponse := getTestChatResponseData(t)
-		
+
 		resp, err := Chat(testPostData.Messages, testPostData.Model, "test-identity")
 		if err != nil {
 			t.Errorf("Failed to post chat: %v", err)
@@ -252,7 +252,7 @@ func TestChatWithImage(t *testing.T) {
 	t.Run("Chat with image", func(t *testing.T) {
 		testPostData := getTestChatPostWithImageBody(t)
 		testChatResponse := getTestChatResponseData(t)
-		
+
 		resp, err := ChatWithImage(testPostData.Messages, testPostData.Model, "test-identity")
 		if err != nil {
 			t.Errorf("Failed to post chat with image: %v", err)
