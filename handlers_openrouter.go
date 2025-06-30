@@ -63,6 +63,7 @@ func openrouterChat(w http.ResponseWriter, r *http.Request) {
 	chat, err := openrouter.Chat(reqBody.Messages, reqBody.Model, reqBody.RequestIdentity)
 	if err != nil {
 		jsonErrorResponse(w, 400, handlerErrors.OpenrouterErrors.Chat)
+		return
 	}
 
 	jsonResponse(w, 200, chat)
